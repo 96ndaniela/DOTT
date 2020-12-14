@@ -11,6 +11,10 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+             
+  <sonar.projectKey>96ndaniela_DOTT</sonar.projectKey>
+  <sonar.organization>96ndaniela</sonar.organization>
+  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencies>
         <dependency>

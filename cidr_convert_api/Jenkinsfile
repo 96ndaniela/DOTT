@@ -1,6 +1,6 @@
 pipeline {
-    agent{
-  
+    agent any
+
     
     stages {
         stage('one: find the dockerfile') {
@@ -24,4 +24,3 @@ pipeline {
         }
     }
 }
-

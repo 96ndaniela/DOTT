@@ -4,7 +4,8 @@ pipeline {
         stage('one: find the dockerfile') {
             steps {
                 dir("cidr_convert_api/java/"){
-                sh 'echo "step"'
+                sh 'touch helpmepls.txt'
+                    sh 'chown -R 1000 /Dockerfile'
             }
             }
         }

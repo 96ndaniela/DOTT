@@ -6,8 +6,9 @@ pipeline {
         stage('one: find the dockerfile') {
             steps {
                 dir("cidr_convert_api/java/"){
-                sh 'touch helpmepls.txt'
-                    sh 'chown -R 1000 Dockerfile'
+                    sd 'pwd'
+                    sh 'ls'
+                sh './build.sh'
             }
             }
         }

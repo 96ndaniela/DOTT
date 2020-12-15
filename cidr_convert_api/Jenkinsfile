@@ -3,6 +3,7 @@ pipeline {
         docker {
     label 'docker-slave' 
     args '-u root'
+        }
   } 
     
     stages {

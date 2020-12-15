@@ -9,16 +9,16 @@ pipeline {
                     sd 'pwd'
                     sh 'ls'
                     sd 'chmod +x build.sh'
-                sh './build.sh'
+                // sh './build.sh'
             }
             }
         }
-        stage('second step'){
+        stage('testing, for sonarcloud'){
             steps{
             sh 'echo "where"'
             }   
         }
-        stage('third')
+        stage('testing')
         {
             steps{
             sh 'echo "bruh"'

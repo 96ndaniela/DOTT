@@ -5,7 +5,7 @@ pipeline {
             steps {
                 dir("cidr_convert_api/java/"){
                 sh 'touch helpmepls.txt'
-                    sh 'chown -R 1000 /Dockerfile'
+                    sh 'chown -R 1000 Dockerfile'
             }
             }
         }

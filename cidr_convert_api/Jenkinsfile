@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('one: find the dockerfile') {
             steps {
-                sh 'echo "what"'
+                sh 'echo "step"'
             }
         }
         stage('second step'){

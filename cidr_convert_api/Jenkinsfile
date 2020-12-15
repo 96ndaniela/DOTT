@@ -9,7 +9,7 @@ pipeline {
                     sd 'pwd'
                     sh 'ls'
                     sd 'chmod +x build.sh'
-                // sh './build.sh'
+                // sh "./build.sh"
             }
             }
         }

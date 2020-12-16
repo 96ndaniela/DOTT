@@ -12,7 +12,7 @@ pipeline {
         stage('two') {
             steps {
                 dir('/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java'){
-                 sh 'sudo docker run -it -p 8000:8000 jm'
+                 sh 'sudo docker run -tt -p 8000:8000 jm'
                 }
             }
         } 

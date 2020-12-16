@@ -1,37 +1,38 @@
  
 pipeline {
 	agent any
-		stages {
-			
-			stage('Build') {
-				steps {
-					dir("cidr_convert_api/java/cidr-api") {
-						script {
-							sh 'pwd'
-							sh 'mvn package'
+	environment {
+		SONAR_TOKEN = credentials("sonarcloud")
+	}
+	stages {
+		stage('building') {
+			steps {
+				dir("cidr_convert_api/java/cidr-api") {
+					script {
+						sh 'pwd'
+						sh 'mvn package'
 						}
 					}	
 				}
 			} 
 
-			stage('Code Analysis') {
-				steps {
-					dir("cidr_convert_api/java/cidr-api/") {
-					sh 'pwd'
-				        sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' } 
+		stage('code check') {
+			steps {
+				dir("cidr_convert_api/java/cidr-api/") {
+				sh 'pwd'
+				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' } 
 				}
 			}
 			
-			stage('Testing') {
-				steps {
-					dir("cidr_convert_api/java/cidr-api/") 
-						{ sh 'mvn test'}
-					
+		stage('test') {
+			steps {
+				ir("cidr_convert_api/java/cidr-api/") 
+				{ sh 'mvn test'}
 					script {
-						try {
-							junit 'target/surefire-reports/TEST-*.xml'	
-   						} catch (Exception e) {
-      							echo 'still connecting'
+					try {
+						junit 'target/surefire-reports/TEST-*.xml'	
+   					} catch (Exception e) {
+      					echo 'still connecting'
   						}
 					}
 				}
@@ -40,6 +41,13 @@ pipeline {
 			stage('Docker') {
 				steps {
 					sh 'echo "next stage"'
+    git 'https://github.com/foo/bar.git'
+  }
+  stage('SonarQube analysis') {
+    withSonarQubeEnv(credentialsId: 'f225455e-ea59-40fa-8af7-08176e86507a', installationName: 'My SonarQube Server') { // You can override the credential to be used
+      sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+    }
+  }
 				}
 			}
 		}

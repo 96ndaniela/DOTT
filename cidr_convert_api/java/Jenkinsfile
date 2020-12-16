@@ -5,7 +5,7 @@ pipeline {
         stage('one') {
             agent any
             steps {
-                dir("cidr_convert_api/java/"){
+                dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java"){
                    // sh 'pwd'
                     // sh 'ls'
                     // sh 'chmod +x build.sh'

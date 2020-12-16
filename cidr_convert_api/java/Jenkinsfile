@@ -16,31 +16,16 @@ pipeline {
                 }
             }
         } 
-        // stage('one') {
-           // agent any
-           //  steps {
-              //  dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java"){
-                   // sh 'pwd'
-                    // sh 'ls'
-                    // sh 'chmod +x build.sh'
-
-                // sh 'sudo docker build -t jm .'}
-             
-                // sh 'sudo docker run -ti -p 8000:8000 jm'
-                    // sh './build.sh'
-            }
-            }
+         
         
-        stage('sonarcloud'){
-            // agent any
+        stage('sonarcloud'){ 
             steps{
                 script { env.SONAR_TOKEN="823c288ab7a9a14f75cd2597c417ec3eef8602a2" }
                 dir("cidr_convert_api/java/cidr-api/"){
                 sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'}
             }   
         }
-        stage('unit test'){
-            // agent any
+        stage('unit test'){ 
             steps{
                 dir("cidr_convert_api/java/cidr-api/")
                 {
@@ -56,19 +41,18 @@ pipeline {
                 }      
             }
          }
-        stage('docker and deploy'){
-            // agent { dockerfile true }
+        stage('docker and deploy'){ 
             steps{
              sh 'echo "it continues"' 
-                // script {
-                    // def customImage = docker.build("my-image:${env.BUILD_ID}")
-                    // customImage.push() */
-                //}
+                
             
             }
 
-    }    }
-     
+        }
+    }     
 }
 
 
+
+
+ 

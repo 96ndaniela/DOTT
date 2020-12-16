@@ -6,15 +6,17 @@ pipeline {
             agent any
             steps {
                 dir("cidr_convert_api/java/"){
-                    sh 'pwd'
-                    sh 'ls'
-                    sh 'chmod +x build.sh'
-                  sh 'sudo docker build -t jm .'
-                 sh 'sudo docker run -ti -p 8000:8000 jm'
+                   // sh 'pwd'
+                    // sh 'ls'
+                    // sh 'chmod +x build.sh'
+
+                 sh 'sudo docker build -t jm .'}
+             
+                // sh 'sudo docker run -ti -p 8000:8000 jm'
                     // sh './build.sh'
             }
             }
-        }
+        
         stage('sonarcloud'){
             // agent any
             steps{
@@ -51,9 +53,8 @@ pipeline {
             
             }
 
-        }
-
-      }
+    }    }
+     
 }
 
 

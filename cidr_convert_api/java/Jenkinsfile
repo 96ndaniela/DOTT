@@ -1,9 +1,25 @@
-node('docker') {
-  stage('SCM') {
-    checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'refs/heads/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/CodeBabel/MEANStackApp.git']]]
-  }
-  stage('SonarQube Analysis') {
-        sh "/home/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqubescanner/bin/sonar-scanner -Dsonar.host.url=http://192.168.0.14:9000 -Dsonar.projectName=meanstackapp -Dsonar.projectVersion=1.0 -Dsonar.projectKey=meanstack:app -Dsonar.sources=. -Dsonar.projectBaseDir=/home/jenkins/workspace/sonarqube_test_pipeline"
+
+pipeline {
+    agent any
+    stages {
+        stage('one: find the dockerfile') {
+            steps {
+                dir("cidr_convert_api/java/"){
+                    sd 'pwd'
+                    sh 'ls'
+                    sh 'chmod +x build.sh'
+                // sh "./build.sh"
+            }
+            }
+        }
+        stage('testing, for sonarcloud'){
+            steps{
+                script { env.SONAR_TOKEN="823c288ab7a9a14f75cd2597c417ec3eef8602a2" }
+                dir("cidr_convert_api/java/cidr-api/"){
+                sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'}
+            }   
+        }
+       
+        }
     }
-  }
  

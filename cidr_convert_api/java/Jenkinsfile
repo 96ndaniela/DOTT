@@ -27,8 +27,12 @@ pipeline {
                 dir("cidr_convert_api/java/cidr-api/")
                 {
                 sh 'mvn test'
-                sh 'mvn clean package -DskipTests'
+                
                 }
+             dir("cidr_convert_api/java/cidr-api/src/main/java/com/dott")
+                {
+             sh 'mvn -Dtest=App test'
+                } 
             
                 script {
                     try {
@@ -42,7 +46,7 @@ pipeline {
         stage('docker and deploy'){
             // agent { dockerfile true }
             steps{
-             sh 'echo "it continues"'
+             sh 'echo "it continues"' 
                 // script {
                     // def customImage = docker.build("my-image:${env.BUILD_ID}")
                     // customImage.push() */

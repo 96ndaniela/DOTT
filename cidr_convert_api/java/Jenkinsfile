@@ -16,7 +16,6 @@ pipeline {
 
 			stage('Code Analysis') {
 				steps {
-					script { env.SONAR_TOKEN="d886edbdf658a6c002602fa25dbb04fae9cd9f13" }
 					dir("cidr_convert_api/java/cidr-api/") {
 					sh 'pwd'
 				        sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' } 

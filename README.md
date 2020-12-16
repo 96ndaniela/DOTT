@@ -60,11 +60,11 @@ curl localhost/ip-validation?value=255.255.0.0
 ## What do you need to do?
  
 ### CI/CD Pipeline
-- [ ] Jenkins
-    - [ ] Webhook
-- [ ] Sonar Qube
+- [  - ] Jenkins
+    - [ - ] Webhook
+- [ - ] Sonar Cloud ( connection )
     - [ ] (Plus) Linting
-    - [ ] Static Code Analysis
+    - [ - ] Static Code Analysis ( analysis itself that it checks each push )
 - [ ] Testing
     - [ ] Unit testing
     - [ ] Functional Tesging(plus)
@@ -73,9 +73,9 @@ curl localhost/ip-validation?value=255.255.0.0
 - [ ] (Plus) Fix Code
 
 ### Techincal Diagram 
-- [ ] Processes
+- [ - MAYBE ] Processes
 - [ ] Information Flow between different technologies
 
 ### Task Organization
-- [ ] Kanban (Trello.com)
+- [  - ] Kanban (Trello.com)
 

@@ -21,20 +21,21 @@ pipeline {
         }
         stage('unit test'){
             steps{
-                dir("cidr_convert_api/java/cidr-api/"){
+                dir("cidr_convert_api/java/cidr-api/")
+                {
                 sh 'mvn test'
                 }
-            }
-            post {
-             dir("cidr_convert_api/java/cidr-api/")
-                always {
+            
+                script {
+                    try {
                     junit 'target/surefire-reports/TEST-*.xml'
-                }
-             
-
-            }   
-        }
+                    } catch (Exception e) {
+                    echo 'keep going'
+                    }
+                }      
+            }
 
        
-    }
+         }
 }
+

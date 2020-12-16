@@ -26,11 +26,11 @@ pipeline {
                 }
             }
             post {
-             dir("cidr_convert_api/java/cidr-api/"){
+             dir("cidr_convert_api/java/cidr-api/")
                 always {
                     junit 'target/surefire-reports/TEST-*.xml'
                 }
-             }
+             
 
             }   
         }

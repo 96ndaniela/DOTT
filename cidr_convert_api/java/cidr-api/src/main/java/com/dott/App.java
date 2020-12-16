@@ -40,9 +40,5 @@ import static spark.Spark.*;
         return r;
     }
   
-  public static Object routefake(fake, fake res) throws Exception{
-  
-  return r;
-  
-  }
+
 }

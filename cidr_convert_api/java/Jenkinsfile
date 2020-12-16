@@ -27,12 +27,8 @@ pipeline {
                 dir("cidr_convert_api/java/cidr-api/")
                 {
                 sh 'mvn test'
-                
+                sh 'mvn -Dtest=App test'
                 }
-             dir("cidr_convert_api/java/cidr-api/src/main/java/com/dott")
-                {
-             sh 'mvn -Dtest=App test'
-                } 
             
                 script {
                     try {

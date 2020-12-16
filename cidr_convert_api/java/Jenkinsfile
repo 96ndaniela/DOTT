@@ -1,58 +1,48 @@
  
 pipeline {
-    agent any
-    stages {
-     stage('one') {
-            steps {
-                dir('/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java'){
-                sh 'sudo docker build -t jm .'
-                }
-            }
-        }
-        stage('two') {
-            steps {
-                dir('/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java'){
-                 sh 'sudo docker run -tt -p 8000:8000 jm'
-                }
-            }
-        } 
-         
-        
-        stage('sonarcloud'){ 
-            steps{
-                script { env.SONAR_TOKEN="823c288ab7a9a14f75cd2597c417ec3eef8602a2" }
-                dir("cidr_convert_api/java/cidr-api/"){
-                sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'}
-            }   
-        }
-        stage('unit test'){ 
-            steps{
-                dir("cidr_convert_api/java/cidr-api/")
-                {
-                sh 'mvn clean test'
-                }
-            
-                script {
-                    try {
-                    junit 'target/surefire-reports/TEST-*.xml'
-                    } catch (Exception e) {
-                    echo 'keep going'
-                    }
-                }      
-            }
-         }
-        stage('docker and deploy'){ 
-            steps{
-             sh 'echo "it continues"' 
-                
-            
-            }
+	agent any
+		stages {
+			
+			stage('Build') {
+				steps {
+					dir("cidr_convert_api/java/cidr-api") {
+						script {
+							sh 'pwd'
+							sh 'mvn package'
+						}
+					}	
+				}
+			} 
 
-        }
-    }     
+			stage('Code Analysis') {
+				steps {
+					script { env.SONAR_TOKEN="d886edbdf658a6c002602fa25dbb04fae9cd9f13" }
+					dir("cidr_convert_api/java/cidr-api/") {
+					sh 'pwd'
+				        sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' } 
+				}
+			}
+			
+			stage('Testing') {
+				steps {
+					dir("cidr_convert_api/java/cidr-api/") 
+						{ sh 'mvn test'}
+					
+					script {
+						try {
+							junit 'target/surefire-reports/TEST-*.xml'	
+   						} catch (Exception e) {
+      							echo 'still connecting'
+  						}
+					}
+				}
+			}
+			
+			stage('Docker') {
+				steps {
+					sh 'echo "next stage"'
+				}
+			}
+		}
 }
-
-
-
-
  

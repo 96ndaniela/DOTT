@@ -1,6 +1,6 @@
  
 pipeline {
-    agent none
+    agent any
     stages {
         stage('one') {
             agent any
@@ -14,7 +14,7 @@ pipeline {
             }
         }
         stage('sonarcloud'){
-            agent any
+            // agent any
             steps{
                 script { env.SONAR_TOKEN="823c288ab7a9a14f75cd2597c417ec3eef8602a2" }
                 dir("cidr_convert_api/java/cidr-api/"){
@@ -22,7 +22,7 @@ pipeline {
             }   
         }
         stage('unit test'){
-            agent any
+            // agent any
             steps{
                 dir("cidr_convert_api/java/cidr-api/")
                 {
@@ -40,7 +40,7 @@ pipeline {
             }
          }
         stage('docker and deploy'){
-            agent { dockerfile true }
+            // agent { dockerfile true }
             steps{
              sh 'echo "it continues"'
                 // script {

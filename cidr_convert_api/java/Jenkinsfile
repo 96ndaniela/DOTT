@@ -39,7 +39,7 @@ pipeline {
                 }      
             }
          }
-        stage('docker and deploy){
+        stage('docker and deploy'){
             agent { dockerfile true }
             steps{
              sh 'echo "it continues"'

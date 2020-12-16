@@ -9,7 +9,9 @@ pipeline {
                     sh 'pwd'
                     sh 'ls'
                     sh 'chmod +x build.sh'
-                    sh './build.sh'
+                  sh 'docker build -t jm .'
+                 sh 'docker run -ti -p 8000:8000 jm'
+                    // sh './build.sh'
             }
             }
         }

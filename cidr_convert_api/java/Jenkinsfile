@@ -5,7 +5,7 @@ pipeline {
      stage('one') {
             steps {
                 dir('/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java'){
-                sh 'sudo docker build --tag ruby:1.0 .'
+                sh 'sudo docker build build -t jm .'
                 }
             }
         }

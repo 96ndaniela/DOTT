@@ -6,7 +6,7 @@ pipeline {
                 dir("cidr_convert_api/java/"){
                     sd 'pwd'
                     sh 'ls'
-                    sd 'chmod +x build.sh'
+                    sh 'chmod +x build.sh'
                 // sh "./build.sh"
             }
             }
@@ -14,16 +14,10 @@ pipeline {
         stage('testing, for sonarcloud'){
             steps{
                 script { env.SONAR_TOKEN="823c288ab7a9a14f75cd2597c417ec3eef8602a2" }
-                
                 dir("cidr_convert_api/java/cidr-api/"){
                 sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'}
             }   
         }
-        stage('testing')
-        {
-            steps{
-            sh 'echo "bruh"'
-            }
+       
         }
     }
-}

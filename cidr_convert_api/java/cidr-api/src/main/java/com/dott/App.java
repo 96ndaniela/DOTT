@@ -3,8 +3,7 @@ import static com.dott.JsonUtil.*;
 import static com.dott.Convert.*;
 import static com.dott.Response.*;
 import static spark.Spark.*;
-
-/* public class App {
+ public class App {
     public static void main(String[] args) {
         System.out.println( "Listening on: http://localhost:8000/" );
 
@@ -14,7 +13,7 @@ import static spark.Spark.*;
         get("/cidr-to-mask", App::routeCidrToMask, json());
         get("/mask-to-cidr", App::routeMaskToCidr, json());
         get("/ip-validation", App::routeMaskToCidr, json());
-    } */ 
+    } 
 
     public static Object routeRoot(spark.Request req, spark.Response res) throws Exception {
         return "OK";

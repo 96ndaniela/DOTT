@@ -39,4 +39,10 @@ import static spark.Spark.*;
         res.type("application/json");
         return r;
     }
+  
+  public static Object routefake(fake, fake res) throws Exception{
+  
+  return r;
+  
+  }
 }

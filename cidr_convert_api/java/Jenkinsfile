@@ -1,8 +1,9 @@
  
 pipeline {
-    agent any
+    agent none
     stages {
         stage('one') {
+            agent any
             steps {
                 dir("cidr_convert_api/java/"){
                     sh 'pwd'
@@ -13,6 +14,7 @@ pipeline {
             }
         }
         stage('sonarcloud'){
+            agent any
             steps{
                 script { env.SONAR_TOKEN="823c288ab7a9a14f75cd2597c417ec3eef8602a2" }
                 dir("cidr_convert_api/java/cidr-api/"){
@@ -20,10 +22,12 @@ pipeline {
             }   
         }
         stage('unit test'){
+            agent any
             steps{
                 dir("cidr_convert_api/java/cidr-api/")
                 {
                 sh 'mvn test'
+                sh 'mvn clean package -DskipTests'
                 }
             
                 script {
@@ -34,9 +38,21 @@ pipeline {
                     }
                 }      
             }
-
-       
          }
+        stage('docker and deploy){
+            agent { dockerfile true }
+            steps{
+             sh 'echo "it continues"'
+                /* script {
+                    def customImage = docker.build("my-image:${env.BUILD_ID}")
+                    customImage.push() */
+                }
+            
+            }
+
         }
+
+      }
 }
+
 

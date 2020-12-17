@@ -33,7 +33,7 @@ pipeline { // start
 			} // end stage
 			stage('sonarcloud') { //start stage  
 				steps { // start step
-					dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") {
+					dir("cidr_convert_api/java/cidr-api/") {
 						withSonarQubeEnv('sonarcloud') 
 						{ // start sqe
 							sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'

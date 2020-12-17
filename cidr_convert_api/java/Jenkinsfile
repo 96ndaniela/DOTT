@@ -50,7 +50,7 @@ pipeline {
 			
 			stage('Docker') {
 				steps {
-					sh 'echo "next stage"'
+					sh 'echo "CREATE THE LISTENING ON LOCAL HOST 8000 "'
      
                 }
    

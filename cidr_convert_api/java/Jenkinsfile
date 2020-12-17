@@ -30,6 +30,21 @@ pipeline { // start
 					} // end of script
 				} // end of steps
 			} // end stage
+		
+		stage('test') { //stage
+            steps { //step
+              withSonarQubeEnv('webhooksc') { //sc
+                sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
+              } //sc end
+            } // step end
+          } // stageend
+          stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
 
 		stage('step two: analysis') { // analysis of java code with sonarcloud through token utilized within the environment
 			steps { // start steps 
@@ -91,4 +106,3 @@ pipeline { // start
 			} // end stage five
     } // end stages
 } // end pipeline
-

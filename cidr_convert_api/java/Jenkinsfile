@@ -23,43 +23,24 @@ pipeline { // start
 				
 					script { // start script
 					try { // specific java unit tests 
-						junit 'target/surefire-reports/TEST-*.xml'	
+						junit 'target/surefire-reports/TEST-*.xml' // que se muestre en sonarqube	
    					} catch (Exception e) {
       					echo 'still connecting' // so it skips, because it's all a fail
   						} // close of exception
 					} // end of script
 				} // end of steps
 			} // end stage
-		
-		stage('test') { //stage
-		    environment {
-            SCANNER_HOME = tool "sonarcloud"
-            ORGANIZATION = "96ndaniela"
-            PROJECT_NAME = "DOTTPROJECT"
-         }
-        steps {
-         withSonarQubeEnv('sonarcloud') {
-            sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-            -Dsonar.java.binaries=build/classes/java/ \
-            -Dsonar.projectKey=$PROJECT_NAME \
-            -Dsonar.sources=.'''
-	    }
-		}
-		}
 
-		stage('step two: analysis') { // analysis of java code with sonarcloud through token utilized within the environment
+		stage('step three: analysis') { // analysis of java code with sonarcloud through token utilized within the environment
 			steps { // start steps 
-				withSonarQubeEnv('My SonarQube Server') {
-					sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' }
-					timeout(time: 1, unit: 'HOURS') { //condition for waiting
-                		waitForQualityGate abortPipeline: true
-              			} // close condition
-				
+				dir("cidr_convert_api/java/cidr-api/") { // within directory
+				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven=plugin:sonar' //tiene que pasar el gate
+				} // end directory
 				} // end of steps
 			} // end of stage
 		 
 		
-		stage('step three: linting') { // linting process used through org.maven.plugins, which has the Programming Mistake Detector
+		stage('step four: linting') { // linting process used through org.maven.plugins, which has the Programming Mistake Detector
 			steps { // start steps 
 				dir("cidr_convert_api/java/cidr-api/") { // within directory
 				sh 'pwd'
@@ -69,30 +50,11 @@ pipeline { // start
 				} // end of steps
 			} // end of stage
 			
-		stage('step four: unit test') { // start stage
-			steps { // start steps
-				dir("cidr_convert_api/java/cidr-api/") { // within directory
-				sh 'mvn clean test' // makes sure the 'cache' is clean, for all units
-				sh 'mvn test'
-				} // end directory
-				
-					script { // start script
-					try { // specific java unit tests 
-						junit 'target/surefire-reports/TEST-*.xml'	
-   					} catch (Exception e) {
-      					echo 'still connecting' // so it skips, because it's all a fail
-  						} // close of exception
-					} // end of script
-				} // end of steps
-			} // end stage
-			
 			stage('step five: deployment') { // start of stage
 				steps { // start steps
 					dir("cidr_convert_api/java/cidr-api/") { // within directory
 					sh 'echo "deployment of the cidr-api!"'
-					sh 'pwd'
-					sh 'mvn package'
-					sh 'java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'
+					mvn site 'java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App' //correr con mvn 
 					} // end the directory
 					
                 		} // end steps

@@ -56,6 +56,9 @@ pipeline { // start
 					sh 'echo "CREATE THE LISTENING ON LOCAL HOST 8000"'
 					sh 'pwd'
 					sh 'mvn package'
+					} // end directory
+					
+					dir("cidr_convert_api/java/cidr-api/target/") { // within directory
 					script{ // start script
 						java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App
 						
@@ -63,9 +66,11 @@ pipeline { // start
 							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App == true 
 						} // end when
 						steps { // start steps for the condition when
-						sleep (2)
-						} // end of steps
+						sleep (2) 
+							
+						} // end of steps for when
 					} // end script
+					} // end the directory
                 		} // end steps
 			} // end stage five
     } // end stages

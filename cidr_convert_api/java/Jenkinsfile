@@ -6,7 +6,7 @@ pipeline { // start
 	stages { // start stage 
 		stage('step one: building') { // build the environment only
 			steps { // start steps
-				dir("cidr_convert_api/java/cidr-api") { // within directory, you'll do...
+				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api") { // within directory, you'll do...
 					script { // start script
 						sh 'pwd'
 						sh 'mvn package'
@@ -18,7 +18,7 @@ pipeline { // start
 		
 		stage('step two: testing') { // start stage
 			steps { // start steps
-				dir("cidr_convert_api/java/cidr-api/") { // within directory
+				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
 				sh 'mvn test'
 				} // end directory
 				
@@ -34,7 +34,7 @@ pipeline { // start
 
 		stage('step three: analysis') { // analysis of java code with sonarcloud through token utilized within the environment
 			steps { // start steps 
-				dir("cidr_convert_api/java/cidr-api/") { // within directory
+				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
 				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' //tiene que pasar el gate
 				} // end directory
 				} // end of steps
@@ -43,7 +43,7 @@ pipeline { // start
 		
 		stage('step four: linting') { // linting process used through org.maven.plugins, which has the Programming Mistake Detector
 			steps { // start steps 
-				dir("cidr_convert_api/java/cidr-api/") { // within directory
+				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
 				sh 'pwd'
 				sh 'mvn pmd:pmd' } // end directory
 				dir("cidr_convert_api/java/cidr-api/target") { //within this directory that now has the linting report
@@ -53,7 +53,7 @@ pipeline { // start
 			
 			stage('step five: deployment') { // start of stage
 				steps { // start steps
-					dir("cidr_convert_api/java/cidr-api/") { // within directory
+					dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
 					sh 'echo "deployment of the cidr-api!"'
 						sh 'mvn deploy'
 						sh 'java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'

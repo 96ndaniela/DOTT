@@ -69,18 +69,18 @@ pipeline {
 				} // end of steps
 			} // end stage
 			
-			stage('step five: deployment') {
-				steps {
+			stage('step five: deployment') { // start of stage
+				steps { // start steps
 					dir("cidr_convert_api/java/cidr-api/")
 					sh 'echo "CREATE THE LISTENING ON LOCAL HOST 8000"'
 					script{
 						sh 'pwd'
 						sh 'mvn package'
-						when {
-							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App }
-					}
-                    sleep (2) // end of script
-                } // end steps
+						when { // start when
+							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App 
+						} // end when
+						sleep (2) }// end of script
+                		} // end steps
 			} // end stage five
     } // end stages
 } // end pipeline

@@ -34,29 +34,23 @@ pipeline { // start
 				} // end of steps
 			} // end stage
 			stage('sonarcloud') { //start step    
-					environment { // start env
-    						SCANNER_HOME = tool 'sonarqubescanner' 
-   						ORGANIZATION = "96ndaniela"
-    						PROJECT_NAME = "DOTTPROJECT"
+					// environment { // start env
+    					//	SCANNER_HOME = tool 'sonarqubescanner' 
+   					//	ORGANIZATION = "96ndaniela"
+    					//	PROJECT_NAME = "DOTTPROJECT"
   					} // end env
 				steps { // start step
 					dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") {
-						withSonarQubeEnv('sonarqubescanner') { // start sqe
+						withSonarQubeEnv('sonarcloud') { // start sqe
 							sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
 						} // close sqe
 						} // close dir	
+					timeout(time: 1, unit: 'HOURS') { // timeout
+                			waitForQualityGate abortPipeline: true
 					}// close steps
 			} // close stage
 		
 			
-			stage("quality gate") { // start stage
-           			steps { // start step
-              				timeout(time: 1, unit: 'HOURS') { // timeout
-                			waitForQualityGate abortPipeline: true
-              				} // close timeout
-          			} // close step
-			} // close stage
-		
 		 
 		
 		stage('step four: linting') { // linting process used through org.maven.plugins, which has the Programming Mistake Detector

@@ -26,9 +26,8 @@ pipeline {
 		stage('test') {
 			steps {
 				dir("cidr_convert_api/java/cidr-api/") 
-				{ sh 'mvn test'}
-				dir("cidr_convert_api/java/cidr-api/src/main/java/com/dott/App.java") 
-				{ sh 'mvn -Dtest=App test' }
+				{ sh 'mvn clean test' 
+				 sh 'mvn test' }
 				
 					script {
 					try {

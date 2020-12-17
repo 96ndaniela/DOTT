@@ -65,8 +65,7 @@ pipeline { // start
 				steps { // start steps
 					dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
 					sh 'echo "deployment of the cidr-api!"'
-						sh 'mvn build package'
-						sh 'java -jar cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar'
+						sh 'mvn site-deploy:cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar'
 					   //correr con mvn 
 					} // end the directory
 					

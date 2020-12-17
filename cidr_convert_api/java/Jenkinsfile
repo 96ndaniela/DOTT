@@ -4,7 +4,7 @@ pipeline {
 		SONAR_TOKEN = credentials("sonarcloud")
 	}
 	stages {
-		stage('building') {
+		stage('step one: building') {
 			steps {
 				dir("cidr_convert_api/java/cidr-api") {
 					script {
@@ -15,15 +15,24 @@ pipeline {
 				}
 			} 
 
-		stage('code check') {
+		stage('step two: analysis') {
 			steps {
 				dir("cidr_convert_api/java/cidr-api/") {
 				sh 'pwd'
 				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' } 
 				}
 			}
+		stage('step three: linting') {
+			steps {
+				dir("cidr_convert_api/java/cidr-api/") {
+				sh 'pwd'
+				sh 'mvn pmd:pmd' } 
+				dir("cidr_convert_api/java/cidr-api/target") {
+				sh 'cat pmd.xml' } 
+				}
+			}
 			
-		stage('test') {
+		stage('step four: unit test') {
 			steps {
 				dir("cidr_convert_api/java/cidr-api/") 
 				{ sh 'mvn clean test' 

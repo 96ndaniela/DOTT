@@ -10,7 +10,7 @@ pipeline { // start
 					script { // start script
 						sh 'pwd'
 						sh 'mvn package'
-						sh 'java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'
+						
 						} // end script
 					}// end in the directory
 				} // end steps
@@ -55,6 +55,7 @@ pipeline { // start
 				steps { // start steps
 					dir("cidr_convert_api/java/cidr-api/") { // within directory
 					sh 'echo "deployment of the cidr-api!"'
+						sh 'java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'
 					sh 'mvn site'  //correr con mvn 
 					} // end the directory
 					

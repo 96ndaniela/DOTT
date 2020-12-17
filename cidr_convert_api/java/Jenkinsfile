@@ -55,8 +55,9 @@ pipeline { // start
 				steps { // start steps
 					dir("cidr_convert_api/java/cidr-api/") { // within directory
 					sh 'echo "deployment of the cidr-api!"'
+						sh 'mvn site'
 						sh 'java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'
-					//sh 'mvn site'  //correr con mvn 
+					   //correr con mvn 
 					} // end the directory
 					
                 		} // end steps

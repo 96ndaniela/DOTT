@@ -33,7 +33,7 @@ pipeline { // start
 		
 		stage('test') { //stage
 		    environment {
-            SCANNER_HOME = tool 'sonarcloud'
+            SCANNER_HOME = tool "sonarcloud"
             ORGANIZATION = "96ndaniela"
             PROJECT_NAME = "DOTTPROJECT"
          }

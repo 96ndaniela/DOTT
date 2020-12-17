@@ -27,6 +27,9 @@ pipeline {
 			steps {
 				dir("cidr_convert_api/java/cidr-api/") 
 				{ sh 'mvn test'}
+				dir("cidr_convert_api/java/cidr-api/src/main/java/com/dott/") 
+				{ sh 'mvn -Dtest=App test' }
+				
 					script {
 					try {
 						junit 'target/surefire-reports/TEST-*.xml'	

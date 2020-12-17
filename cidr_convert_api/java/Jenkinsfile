@@ -41,12 +41,12 @@ pipeline { // start
 						} // close dir	
 					}// close steps
 			} // close stage
-		stage('gate quality'){
-			steps{
-			timeout(time: 1, unit: 'HOURS') { 
-			waitForQualityGate abortPipeline: true }
-			}
-		}
+		stage('gate quality'){ // start stage
+			steps{ // steps
+			timeout(time: 1, unit: 'HOURS') {  // timeout
+			waitForQualityGate abortPipeline: true } // close timeout
+			} // close steps
+		} // close stage
 		
 			
 		 

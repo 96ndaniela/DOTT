@@ -76,9 +76,10 @@ pipeline {
 					script{
 						sh 'pwd'
 						sh 'mvn package' 
+						sh 'java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'
 						}// end of script
 						when { // start when
-							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App 
+							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App == true 
 						} // end when
 						steps { // start steps for the condition when
 						sleep (2)

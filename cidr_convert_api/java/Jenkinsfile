@@ -35,7 +35,7 @@ pipeline { // start
 		stage('step three: analysis') { // analysis of java code with sonarcloud through token utilized within the environment
 			steps { // start steps 
 				dir("cidr_convert_api/java/cidr-api/") { // within directory
-				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven=plugin:sonar' //tiene que pasar el gate
+				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' //tiene que pasar el gate
 				} // end directory
 				} // end of steps
 			} // end of stage

@@ -39,7 +39,7 @@ pipeline { // start
 							sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
 						} // close sqe
 						} // close dir	
-					timeout(time: 1, unit: 'hour') { // timeout
+					timeout(time: 1, unit: 'HOURS') { // timeout
 					waitForQualityGate abortPipeline: true }
 					}// close steps
 			} // close stage

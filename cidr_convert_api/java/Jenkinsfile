@@ -41,7 +41,7 @@ pipeline { // start
 						} // close sqe
 						} // close dir	
 					timeout(time: 1, unit: 'HOURS') { // timeout
-                			waitForQualityGate abortPipeline: true
+						waitForQualityGate abortPipeline: true }
 					}// close steps
 			} // close stage
 		

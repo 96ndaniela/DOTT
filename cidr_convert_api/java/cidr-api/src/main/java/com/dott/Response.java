@@ -9,5 +9,6 @@ public class Response {
         this.function = function;
         this.input = input;
         this.output = output;
+        this.output = output;
     }
 } 

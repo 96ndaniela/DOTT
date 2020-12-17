@@ -79,7 +79,10 @@ pipeline {
 						when { // start when
 							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App 
 						} // end when
-						sleep (2) }// end of script
+						steps { // start steps for the condition when
+						sleep (2)
+						} // end of steps
+						}// end of script
                 		} // end steps
 			} // end stage five
     } // end stages

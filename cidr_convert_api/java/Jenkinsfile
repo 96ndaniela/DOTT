@@ -14,15 +14,43 @@ pipeline { // start
 					}// end in the directory
 				} // end steps
 			} // end stage one
+		
+		stage('step two: testing') { // start stage
+			steps { // start steps
+				dir("cidr_convert_api/java/cidr-api/") { // within directory
+				sh 'mvn test'
+				} // end directory
+				
+					script { // start script
+					try { // specific java unit tests 
+						junit 'target/surefire-reports/TEST-*.xml'	
+   					} catch (Exception e) {
+      					echo 'still connecting' // so it skips, because it's all a fail
+  						} // close of exception
+					} // end of script
+				} // end of steps
+			} // end stage
 
 		stage('step two: analysis') { // analysis of java code with sonarcloud through token utilized within the environment
 			steps { // start steps 
-				dir("cidr_convert_api/java/cidr-api/") { // within the directory
-				sh 'pwd'
-				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' } // end directory
+				withSonarQubeEnv('My SonarQube Server') {
+					sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
+					timeout(time: 1, unit: 'HOURS') { //condition for waiting
+                		waitForQualityGate abortPipeline: true
+              			} // close condition
+				
 				} // end of steps
 			} // end of stage
+		 
 
+		// stage("step three: connection ") { // start stage
+            	//	steps { // start step
+              	//		timeout(time: 1, unit: 'HOURS') { //condition for waiting
+                //		waitForQualityGate abortPipeline: true
+              			//} // close condition
+            		//} // close step
+          	//} // close stage
+		
 		stage('step three: linting') { // linting process used through org.maven.plugins, which has the Programming Mistake Detector
 			steps { // start steps 
 				dir("cidr_convert_api/java/cidr-api/") { // within directory

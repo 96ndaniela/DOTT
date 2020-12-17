@@ -33,12 +33,7 @@ pipeline { // start
 					} // end directory
 				} // end of steps
 			} // end stage
-			stage('sonarcloud') { //start step    
-					// environment { // start env
-    					//	SCANNER_HOME = tool 'sonarqubescanner' 
-   					//	ORGANIZATION = "96ndaniela"
-    					//	PROJECT_NAME = "DOTTPROJECT"
-  					} // end env
+			stage('sonarcloud') { //start stage  
 				steps { // start step
 					dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") {
 						withSonarQubeEnv('sonarcloud') { // start sqe

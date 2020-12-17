@@ -53,11 +53,13 @@ pipeline { // start
 			stage('step five: deployment') { // start of stage
 				steps { // start steps
 					dir("cidr_convert_api/java/cidr-api/") { // within directory
-					sh 'echo "CREATE THE LISTENING ON LOCAL HOST 8000"'
+					sh 'echo "deployment of the cidr-api!"'
 					sh 'pwd'
 					sh 'mvn package'
 					sh 'java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'
 					} // end the directory
+					sh 'mvn deploy' 
+					
                 		} // end steps
 			} // end stage five
     } // end stages

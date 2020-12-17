@@ -32,19 +32,20 @@ pipeline { // start
 			} // end stage
 		
 		stage('test') { //stage
-            steps { //step
-              withSonarQubeEnv('webhooksc') { //sc
-                sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
-              } //sc end
-            } // step end
-          } // stageend
-          stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
+		    environment {
+            SCANNER_HOME = tool 'sonarcloud'
+            ORGANIZATION = "96ndaniela"
+            PROJECT_NAME = "DOTTPROJECT"
+         }
+        steps {
+         withSonarQubeEnv('sonarcloud') {
+            sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+            -Dsonar.java.binaries=build/classes/java/ \
+            -Dsonar.projectKey=$PROJECT_NAME \
+            -Dsonar.sources=.'''
+	    }
+		}
+		}
 
 		stage('step two: analysis') { // analysis of java code with sonarcloud through token utilized within the environment
 			steps { // start steps 
@@ -57,14 +58,6 @@ pipeline { // start
 				} // end of steps
 			} // end of stage
 		 
-
-		// stage("step three: connection ") { // start stage
-            	//	steps { // start step
-              	//		timeout(time: 1, unit: 'HOURS') { //condition for waiting
-                //		waitForQualityGate abortPipeline: true
-              			//} // close condition
-            		//} // close step
-          	//} // close stage
 		
 		stage('step three: linting') { // linting process used through org.maven.plugins, which has the Programming Mistake Detector
 			steps { // start steps 

@@ -1,24 +1,4 @@
-pipeline {
-	agent any
-	environment {
-		SONAR_TOKEN = credentials("sonarcloud")
-	}
-	stages {
-		stage('step one: building') {
-			steps {
-				dir("cidr_convert_api/java/cidr-api") {
-					script {
-						sh 'pwd'
-						sh 'mvn package'
-						}
-					}	
-				}
-			} 
-
-		stage('step two: analysis') {
-			steps {
-				dir("cidr_convert_api/java/cidr-api/") {
-				sh 'pwd'pipeline { // start
+pipeline { // start
 	agent any
 	environment { // starts environment: needed for sonarcloud and security without token at sight
 		SONAR_TOKEN = credentials("sonarcloud")
@@ -79,7 +59,7 @@ pipeline {
 						sh 'java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'
 						}// end of script
 						when { // start when
-							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App == true }
+							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App == true 
 						} // end when
 						steps { // start steps for the condition when
 						sleep (2)

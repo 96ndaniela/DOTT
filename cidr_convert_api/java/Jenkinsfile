@@ -21,6 +21,7 @@ pipeline { // start
 			steps { // start steps
 				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
 				sh 'mvn test'
+					} // end directory
 					script { // start script
 					try { // specific java unit tests 
 						junit 'target/surefire-reports/TEST-*.xml' // que se muestre en sonarqube	
@@ -28,7 +29,6 @@ pipeline { // start
       					echo 'still connecting' // so it skips, because it's all a fail
   						} // close of exception
 					} // end of script
-					} // end directory
 				} // end of steps
 			} // end stage
 			stage('sonarcloud') { //start stage  
@@ -40,7 +40,7 @@ pipeline { // start
 						} // close sqe
 						} // close dir	
 					timeout(time: 1, unit: 'HOURS') { // timeout
-						waitForQualityGate abortPipeline: true }
+					waitForQualityGate abortPipeline: true }
 					}// close steps
 			} // close stage
 		
@@ -70,4 +70,4 @@ pipeline { // start
 			} // end stage five
     } // end stages
 } // end pipeline
-}
+

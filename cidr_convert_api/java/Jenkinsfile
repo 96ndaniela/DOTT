@@ -2,6 +2,7 @@ pipeline { // start
 	agent any
 	environment { // starts environment: needed for sonarcloud and security without token at sight
 		SONAR_TOKEN = credentials("sonarcloud")
+		SONAR_MAVEN_GOAL=credentials("sonarcloud")
 	} // ends environment
 	stages { // start stage 
 		stage('step one: building') { // build the environment only
@@ -20,7 +21,7 @@ pipeline { // start
 			steps { // start steps
 				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
 				sh 'mvn test'
-				} // end directory
+				 
 				
 					script { // start script
 					try { // specific java unit tests 
@@ -29,16 +30,33 @@ pipeline { // start
       					echo 'still connecting' // so it skips, because it's all a fail
   						} // close of exception
 					} // end of script
+					} // end directory
 				} // end of steps
 			} // end stage
-
-		stage('step three: analysis') { // analysis of java code with sonarcloud through token utilized within the environment
-			steps { // start steps 
-				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
-				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' //tiene que pasar el gate
-				} // end directory
-				} // end of steps
-			} // end of stage
+			stage('sonarcloud') { //start step    
+					environment { // start env
+    						SCANNER_HOME = tool 'sonarcloud' 
+   						ORGANIZATION = "96ndaniela"
+    						PROJECT_NAME = "DOTTPROJECT"
+  					} // end env
+				steps { // start step
+					dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") {
+						withSonarQubeEnv('sonarcloud') { // start sqe
+							sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+						} // close sqe
+						} // close dir	
+					}// close steps
+			} // close stage
+		
+			
+			stage("quality gate") { // start stage
+           			steps { // start step
+              				timeout(time: 1, unit: 'HOURS') { // timeout
+                			waitForQualityGate abortPipeline: true
+              				} // close timeout
+          			} // close step
+			} // close stage
+		
 		 
 		
 		stage('step four: linting') { // linting process used through org.maven.plugins, which has the Programming Mistake Detector

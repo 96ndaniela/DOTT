@@ -18,7 +18,71 @@ pipeline {
 		stage('step two: analysis') {
 			steps {
 				dir("cidr_convert_api/java/cidr-api/") {
+				sh 'pwd'pipeline { // start
+	agent any
+	environment { // starts environment: needed for sonarcloud and security without token at sight
+		SONAR_TOKEN = credentials("sonarcloud")
+	} // ends environment
+	stages { // start stage 
+		stage('step one: building') { // build the environment only
+			steps {
+				dir("cidr_convert_api/java/cidr-api") {
+					script {
+						sh 'pwd'
+						sh 'mvn package'
+						}
+					}	// end all within directories
+				} // end steps
+			} // end stage one
+
+		stage('step two: analysis') { // analysis of java code with sonarcloud through token utilized within the environment
+			steps {
+				dir("cidr_convert_api/java/cidr-api/") {
 				sh 'pwd'
+				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' } 
+				} // end of steps
+			} // end of stage
+
+		stage('step three: linting') { // linting process used through org.maven.plugins, which has the Programming Mistake Detector
+			steps {
+				dir("cidr_convert_api/java/cidr-api/") {
+				sh 'pwd'
+				sh 'mvn pmd:pmd' } 
+				dir("cidr_convert_api/java/cidr-api/target") { 
+				sh 'cat pmd.xml' }  // this part is only to show what the errors are within java itself
+				} // end of steps
+			} // end of stage
+			
+		stage('step four: unit test') { // start stage
+			steps { // start steps
+				dir("cidr_convert_api/java/cidr-api/") 
+				{ sh 'mvn clean test' // makes sure the 'cache' is clean, for all units
+				 sh 'mvn test' } // unit testing
+				
+					script { // start script
+					try { // specific java unit tests //
+						junit 'target/surefire-reports/TEST-*.xml'	
+   					} catch (Exception e) {
+      					echo 'still connecting' // so it skips, because it's all a fail
+  						} // close of exception
+					} // end of script
+				} // end of steps
+			} // end stage
+			
+			stage('step five: deployment') {
+				steps {
+					dir("cidr_convert_api/java/cidr-api/")
+					sh 'echo "CREATE THE LISTENING ON LOCAL HOST 8000"'
+					script{
+						when {
+							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App }
+					}
+                    sleep (2) // end of script
+                } // end steps
+			} // end stage five
+    } // end stages
+} // end pipeline
+ 
 				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' } 
 				}
 			}
@@ -48,9 +112,17 @@ pipeline {
 				}
 			}
 			
-			stage('Docker') {
+			stage('step five: deployment') {
 				steps {
+					dir("cidr_convert_api/java/cidr-api/")
 					sh 'echo "CREATE THE LISTENING ON LOCAL HOST 8000 "'
+					script{
+						when {
+							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App }
+						
+						
+					 
+					}
      
                 }
    

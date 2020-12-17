@@ -74,6 +74,8 @@ pipeline {
 					dir("cidr_convert_api/java/cidr-api/")
 					sh 'echo "CREATE THE LISTENING ON LOCAL HOST 8000"'
 					script{
+						sh 'pwd'
+						sh 'mvn package'
 						when {
 							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App }
 					}
@@ -82,52 +84,4 @@ pipeline {
 			} // end stage five
     } // end stages
 } // end pipeline
- 
-				sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar' } 
-				}
-			}
-		stage('step three: linting') {
-			steps {
-				dir("cidr_convert_api/java/cidr-api/") {
-				sh 'pwd'
-				sh 'mvn pmd:pmd' } 
-				dir("cidr_convert_api/java/cidr-api/target") {
-				sh 'cat pmd.xml' } 
-				}
-			}
-			
-		stage('step four: unit test') {
-			steps {
-				dir("cidr_convert_api/java/cidr-api/") 
-				{ sh 'mvn clean test' 
-				 sh 'mvn test' }
-				
-					script {
-					try {
-						junit 'target/surefire-reports/TEST-*.xml'	
-   					} catch (Exception e) {
-      					echo 'still connecting'
-  						}
-					}
-				}
-			}
-			
-			stage('step five: deployment') {
-				steps {
-					dir("cidr_convert_api/java/cidr-api/")
-					sh 'echo "CREATE THE LISTENING ON LOCAL HOST 8000 "'
-					script{
-						when {
-							java -cp target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App }
-						
-						
-					 
-					}
-     
-                }
-   
-			}
-		
-    }
-}
- 
+  

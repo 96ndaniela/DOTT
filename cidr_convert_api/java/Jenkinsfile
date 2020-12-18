@@ -38,6 +38,7 @@ pipeline { // start
 						withSonarQubeEnv('sonarcloud') 
 						{ // start sqe
 							sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+							sh '-Dsonar.coverage.jacoco.xmlReportPaths=*/target/surefire-reports/TEST-*.xml'
 						} // close sqe
 						} // close dir
 					sh 'echo "it has been connected to sonarcloud"'

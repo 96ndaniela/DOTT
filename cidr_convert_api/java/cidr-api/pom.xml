@@ -83,6 +83,31 @@
           <outputDirectory>/var/lib/jenkins/workspace/DOTTmultibranch_master@2/cidr_convert_api/java/cidr-api/target/reports</outputDirectory>
         </configuration>
       </plugin>
+     
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.6</version>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+            </execution>
+            <execution>
+                <id>jacoco-report</id>
+                <phase>test</phase>
+                <goals>
+                    <goal>report</goal>
+                </goals>
+                <!-- default target/jscoco/site/* -->
+                <configuration>
+                    <outputDirectory>/var/lib/jenkins/workspace/DOTTmultibranch_master@2/cidr_convert_api/java/cidr-api/target/jcc</outputDirectory>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+     
     </plugins>
   </reporting>
              

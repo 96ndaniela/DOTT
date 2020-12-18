@@ -10,7 +10,8 @@ pipeline { // start
 				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api") { // within directory, you'll do...
 					script { // start script
 						sh 'pwd'
-						sh 'mvn package'
+						sh 'mvn test'
+						//sh 'mvn package'
 						
 						} // end script
 					}// end in the directory
@@ -20,7 +21,7 @@ pipeline { // start
 		stage('step two: testing') { // start stage
 			steps { // start steps
 				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api") { // within directory
-				sh 'mvn test'
+				//sh 'mvn test'
 				 
 				} // dir exit
 					

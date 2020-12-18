@@ -32,19 +32,22 @@ pipeline { // start
 				} // end of steps
 			} // end stage
 	
-			stage('sonarcloud') { //start stage  
+			stage('step three: sonarcloud') { //start stage  
 				steps { // start step
 					 dir("cidr_convert_api/java/cidr-api/") {
 						withSonarQubeEnv('sonarcloud') 
 						{ // start sqe
 							sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
 						} // close sqe
-						} // close dir	
+						} // close dir
+					sh 'echo "it has been connected to sonarcloud"'
 					}// close steps
 			} // close stage
 		
-		stage('gate quality') {// start stage 
+		stage('step four: gate quality') {// start stage 
 		steps{ // steps
+			sh 'pwd'
+			sh 'echo "checking through the quality gate"'
 		timeout(time: 1, unit: 'HOURS') {  // timeout
 		waitForQualityGate abortPipeline: true } // close timeout
 		} // close steps

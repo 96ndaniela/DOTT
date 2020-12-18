@@ -29,7 +29,7 @@ pipeline { // start
   						} 
 						  // que se muestre en sonarqube
 						// close of exception
-						//} // end of script
+						} // end of script
 					} // directory	
 				} // end of steps
 			} // end stage

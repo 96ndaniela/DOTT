@@ -61,7 +61,7 @@ pipeline { // start
 				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
 				sh 'pwd'
 				sh 'mvn pmd:pmd' } // end directory
-				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/target") { //within this directory that now has the linting report
+				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api@tmp/target") { //within this directory that now has the linting report
 				sh 'cat pmd.xml' }  // this part is only to show what the errors are within java itself
 				} // end of steps
 			} // end of stage

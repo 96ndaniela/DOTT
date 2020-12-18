@@ -44,7 +44,7 @@ pipeline { // start
 		stage('gate quality')// start stage 
 			{
 			steps{ // steps
-			timeout(time: 1, unit: 'MINUTES') {  // timeout
+			timeout(time: 1, unit: 'HOURS') {  // timeout
 			waitForQualityGate abortPipeline: true } // close timeout
 			} // close steps
 		} // close stage
@@ -64,9 +64,9 @@ pipeline { // start
 			
 			stage('step five: deployment') { // start of stage
 				steps { // start steps
-					dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/") { // within directory
+					dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api/target") { // within directory
 					sh 'echo "deployment of the cidr-api!"'
-						sh 'java -jar target/cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'
+						sh 'java -jar cidr-api-1.0-SNAPSHOT-jar-with-dependencies.jar com.dott.App'
 					   //correr con mvn 
 					} // end the directory
 					

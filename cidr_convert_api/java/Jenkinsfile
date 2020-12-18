@@ -22,15 +22,14 @@ pipeline { // start
 					script { // start script
 					try { // specific java unit tests 
 						sh 'mvn test'
-							
    					 } catch (Exception e) {
       					echo 'it was a failure, continue ... ' 
-						junit '*/surefire-reports/*.xml'
+						junit '*/surefire-reports/TEST-*.xml'
 						// so it skips, because it's all a fail
   						} 
 						  // que se muestre en sonarqube
 						// close of exception
-						} // end of script
+						//} // end of script
 					} // directory	
 				} // end of steps
 			} // end stage

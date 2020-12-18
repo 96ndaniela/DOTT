@@ -70,14 +70,14 @@ pipeline { // start
 					   //correr con mvn 
 					} // end the directory
                 		} // end steps
-			} // end stage five
+		 
 		post {
                 always {
 			sh 'chmod +x build.sh'			
                     sh '/build.sh'
                 }
             }
-		
+		} // end stage five
 		
     } // end stages
 } // end pipeline

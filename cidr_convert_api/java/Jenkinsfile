@@ -48,8 +48,8 @@ pipeline { // start
 		steps{ // steps
 			sh 'pwd'
 			sh 'echo "checking through the quality gate"'
-		timeout(time: 1, unit: 'HOURS') {  // timeout
-		waitForQualityGate abortPipeline: true } // close timeout
+		timeout(time: 3, unit: 'MINUTES') {  // timeout
+		waitForQualityGate abortPipeline: false } // close timeout
 		} // close steps
 		} // close stage
 

@@ -41,7 +41,7 @@ pipeline { // start
 					}// close steps
 			} // close stage
 		
-		 stage('gate quality')// start stage 
+		stage('gate quality') {// start stage 
 		steps{ // steps
 		timeout(time: 1, unit: 'HOURS') {  // timeout
 		waitForQualityGate abortPipeline: true } // close timeout

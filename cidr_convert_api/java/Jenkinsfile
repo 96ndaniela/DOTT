@@ -18,7 +18,7 @@ pipeline { // start
 		
 		stage('step two: testing') { // start stage
 			steps { // start steps
-				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master@2/cidr_convert_api/java/cidr-api/target/test-classes") { // within directory
+				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master@2/cidr_convert_api/java/cidr-api") { // within directory
 				sh 'mvn test'						
 			catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'App.java'

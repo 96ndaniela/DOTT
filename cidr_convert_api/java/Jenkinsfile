@@ -22,7 +22,6 @@ pipeline { // start
 				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api") { // within directory
 				sh 'mvn test'
 				 
-					sh 'mvn surefire-report:report-only'
 				} // dir exit
 					
 					script { // start script

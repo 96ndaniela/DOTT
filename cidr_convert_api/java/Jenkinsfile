@@ -30,11 +30,11 @@ pipeline { // start
 					// try { // specific java unit tests 
 						// junit '*/surefire-reports/*.xml' // que se muestre en sonarqube	
    					// } catch (Exception e) {
-      					echo 'still connecting' // so it skips, because it's all a fail
+      					//echo 'still connecting' // so it skips, because it's all a fail
   						} // close of exception
 					} // end of script
 				} // end of steps
-			} // end stage
+			//} // end stage
 			stage('sonarcloud') { //start stage  
 				steps { // start step
 					 dir("cidr_convert_api/java/cidr-api/") {

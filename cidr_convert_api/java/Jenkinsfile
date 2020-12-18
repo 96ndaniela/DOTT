@@ -19,7 +19,7 @@ pipeline { // start
 		stage('step two: testing') { // start stage
 			steps { // start steps
 				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master@2/cidr_convert_api/java/cidr-api") { // within directory
-				sh 'mvn test'		
+					sh 'mvn test'	} // directory	
 					script { // start script
 					try { // specific java unit tests 
 						junit '*/surefire-reports/*.xml' // que se muestre en sonarqube	

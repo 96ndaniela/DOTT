@@ -21,12 +21,13 @@ pipeline { // start
 			steps { // start steps
 				dir("/var/lib/jenkins/workspace/DOTTmultibranch_master/cidr_convert_api/java/cidr-api") { // within directory
 				sh 'mvn test'
-				sh 'mvn surefire-report:report' 
+				 
+					sh 'mvn surefire-report:report-only'
 				} // dir exit
 					
 					script { // start script
 					try { // specific java unit tests 
-						junit 'target/surefire-reports/TEST-*.xml' // que se muestre en sonarqube	
+						junit 'target/surefire-reports/*.xml' // que se muestre en sonarqube	
    					} catch (Exception e) {
       					echo 'still connecting' // so it skips, because it's all a fail
   						} // close of exception
